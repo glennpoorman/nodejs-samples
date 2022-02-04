@@ -1,6 +1,6 @@
 const superagent = require('superagent');
 const { makeQuery } = require('./utilities');
-const { config : { github, google, facebook, forge } } = require('./config');
+const { config } = require('./config');
 
 // Internal function sets up url string to redirect to GitHub for an authorization code.
 //
@@ -10,11 +10,11 @@ const { config : { github, google, facebook, forge } } = require('./config');
 function authorizeGithub()
 {
   const credentials = {
-    client_id : github.credentials.clientId,
-    redirect_uri : github.credentials.redirectUri,
+    client_id : config.github.credentials.clientId,
+    redirect_uri : config.redirectUri,
     state : 'github'
   };
-  return `${github.authorizeEndpoint}?${makeQuery(credentials)}`;
+  return `${config.github.authorizeEndpoint}?${makeQuery(credentials)}`;
 }
 
 // Internal function sets up url string to redirect to Google for an authorization code.
@@ -25,13 +25,13 @@ function authorizeGithub()
 function authorizeGoogle()
 {
   const credentials = {
-    response_type : 'code',
-    client_id : google.credentials.clientId,
-    redirect_uri : google.credentials.redirectUri,
-    scope : 'openid email',
+    client_id : config.google.credentials.clientId,
+    response_type : config.google.credentials.responseType,
+    scope : config.google.credentials.scope,
+    redirect_uri : config.redirectUri,
     state : 'google'
   };
-  return `${google.authorizeEndpoint}?${makeQuery(credentials)}`;
+  return `${config.google.authorizeEndpoint}?${makeQuery(credentials)}`;
 }
 
 // Internal function sets up url string to redirect to Facebook for an authorization code.
@@ -42,11 +42,11 @@ function authorizeGoogle()
 function authorizeFacebook()
 {
   const credentials = {
-    client_id : facebook.credentials.clientId,
-    redirect_uri : facebook.credentials.redirectUri,
+    client_id : config.facebook.credentials.clientId,
+    redirect_uri : config.redirectUri,
     state : 'facebook'
   };
-  return `${facebook.authorizeEndpoint}?${makeQuery(credentials)}`;
+  return `${config.facebook.authorizeEndpoint}?${makeQuery(credentials)}`;
 }
 
 // Internal function sets up url string to redirect to Forge for an authorization code.
@@ -57,12 +57,12 @@ function authorizeFacebook()
 function authorizeForge()
 {
   const credentials = {
-    client_id : forge.credentials.clientId,
-    response_type : 'code',
-    redirect_uri : forge.credentials.redirectUri,
+    client_id : config.forge.credentials.clientId,
+    response_type : config.forge.credentials.responseType,
+    redirect_uri : config.redirectUri,
     state : 'forge'
   };
-  return `${forge.authorizeEndpoint}?${makeQuery(credentials)}`;
+  return `${config.forge.authorizeEndpoint}?${makeQuery(credentials)}`;
 }
 
 // The "authorize" function now parses the name of the authorization server to
@@ -102,16 +102,16 @@ exports.authorize = (req, res) => {
 //
 async function tokenGitHub(authCode) {
 
-  const { body : { access_token } } = await superagent.post(github.getTokenEndpoint)
+  const { body : { access_token } } = await superagent.post(config.github.getTokenEndpoint)
     .type('form')
     .set('Accept', 'application/json')
     .send({
-      client_id : github.credentials.clientId,
-      client_secret : github.credentials.clientSecret,
+      client_id : config.github.credentials.clientId,
+      client_secret : config.github.credentials.clientSecret,
       code : authCode
     });
 
-  const { body : { id } } = await superagent.get(github.userIdEndpoint)
+  const { body : { id } } = await superagent.get(config.github.userIdEndpoint)
     .set('User-Agent', 'movie-quotes')
     .set('Authorization', `token ${access_token}`)
     .set('Accept', 'application/json');
@@ -127,18 +127,18 @@ async function tokenGitHub(authCode) {
 //
 async function tokenGoogle(authCode) {
 
-  const { body : { access_token } } = await superagent.post(google.getTokenEndpoint)
+  const { body : { access_token } } = await superagent.post(config.google.getTokenEndpoint)
     .type('form')
     .set('Accept', 'application/json')
     .send({
-      grant_type : google.credentials.grantType,
-      client_id : google.credentials.clientId,
-      client_secret : google.credentials.clientSecret,
-      redirect_uri : google.credentials.redirectUri,
+      grant_type : config.google.credentials.grantType,
+      client_id : config.google.credentials.clientId,
+      client_secret : config.google.credentials.clientSecret,
+      redirect_uri : config.redirectUri,
       code : authCode
     });
 
-  const { body : { sub } } = await superagent.get(google.userIdEndpoint)
+  const { body : { sub } } = await superagent.get(config.google.userIdEndpoint)
     .set('Authorization', `Bearer ${access_token}`)
     .set('Accept', 'application/json');
 
@@ -153,17 +153,17 @@ async function tokenGoogle(authCode) {
 //
 async function tokenFacebook(authCode) {
 
-  const { body : { access_token } } = await superagent.post(facebook.getTokenEndpoint)
+  const { body : { access_token } } = await superagent.post(config.facebook.getTokenEndpoint)
     .type('form')
     .set('Accept', 'application/json')
     .send({
-      client_id : facebook.credentials.clientId,
-      client_secret : facebook.credentials.clientSecret,
-      redirect_uri : facebook.credentials.redirectUri,
+      client_id : config.facebook.credentials.clientId,
+      client_secret : config.facebook.credentials.clientSecret,
+      redirect_uri : config.redirectUri,
       code : authCode
     });
 
-  const { res : { text } } = await superagent.get(facebook.userIdEndpoint)
+  const { res : { text } } = await superagent.get(config.facebook.userIdEndpoint)
     .query({ 'access_token' : `${access_token}`})
     .set('Accept', 'application/json');
 
@@ -179,17 +179,17 @@ async function tokenFacebook(authCode) {
 //
 async function tokenForge(authCode) {
 
-  const { body : { access_token } } = await superagent.post(forge.getTokenEndpoint)
+  const { body : { access_token } } = await superagent.post(config.forge.getTokenEndpoint)
     .type('form')
     .send({
       code : authCode,
-      client_id : forge.credentials.clientId,
-      client_secret : forge.credentials.clientSecret,
-      grant_type : forge.credentials.grantType,
-      redirect_uri : forge.credentials.redirectUri
+      client_id : config.forge.credentials.clientId,
+      client_secret : config.forge.credentials.clientSecret,
+      grant_type : config.forge.credentials.grantType,
+      redirect_uri : config.redirectUri
     });
 
-  const { body : { userId } } = await superagent.get(forge.userIdEndpoint)
+  const { body : { userId } } = await superagent.get(config.forge.userIdEndpoint)
     .set('Authorization', `Bearer ${access_token}`);
 
   return `${access_token}.${userId}`;

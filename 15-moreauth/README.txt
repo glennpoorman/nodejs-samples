@@ -1,8 +1,48 @@
 moreauth
 --------
+We introduced authorization a couple of samples ago. It is not uncommon, however, to happen
+upon a website that allows login via multiple OAuth2 servers. How often have you gone to a 
+website that required an account and have seen "Login with Google", "Login with Facebook", and
+maybe two or three other similar lines. This is usually a convenience that is added especially
+when the app providing it doesn't really require any other acccess to those servers. In other
+words, when the app doesn't care who authorized you. Just as long as somebody did. They are 
+banking that if they put out a handful of the most popular sites, you're bound to already have
+an account with at least one of them.
+
+This sample, in addition to the login with GitHub, now offers options to login with Google,
+Facebook, or Autodesk Forge (for any CAD people out there). Selecting any of the four will
+redirect you to the appropriate login page and then, if you're successfully authorized, you
+will be given access to the movie quotes app.
+
+One important note to consider is that, if you have accounts on more than one of those servers,
+each account will be considered a different user in the eyes of the movie quotes app. consider
+the "users" sample where we queried the user id to determine where to store your favorites.
+We'll continue to do that here but, of course, each server will provide a completely different
+user id even though it's you logging into each one. This is by design and typical of this kind
+of workflow.
 
 Try It
 ------
+
+For any of the authorization servers you want to try, you will need to register the sample
+application with that server and copy the generated client id and client secret. The web
+portals for the various servers are all different. I included step by step instructions for
+registering with GitHub in the "oauth" sample. For the other servers, I'll just include the
+urls and let you go figure it out.
+
+1. https://www.github.com
+2. https://developers.google.com/
+3. https://developers.facebook.com/
+4. https://forge.autodesk.com
+
+If you're feeling adventerous, you might also look into some other OAuth2 providers and
+experiment with expanding this sample. You can find a list (likely not complete) at:
+
+  https://en.wikipedia.org/wiki/List_of_OAuth_providers
+
+If you're curious about other sites that might not be in that list, you can simply do a 
+Google search with the name of the server and "OAuth". You'll be surprised at how many
+sites support authorization.
 
 Start the server by running "node" or "npm start" from the command line.
 
@@ -14,7 +54,8 @@ What's Different?
 -----------------
 
 * "server/config.js". Added an additional configuration object for each additional authorization
-  server containing the data required for authorization.
+  server containing the data required for authorization. Also moved the "redirectUri" up to be
+  a top level property since, in our case, it is the same for each server.
 
 * "server/oauth.js". Several modifications to handle additional authorization servers.
 
