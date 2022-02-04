@@ -1,0 +1,14 @@
+{
+  "name": "use-npm",
+  "version": "1.0.0",
+  "description": "Managing 3rd parties.",
+  "main": "use-npm.js",
+  "scripts": {
+    "start": "node use-npm.js"
+  },
+  "author": "Glenn Poorman",
+  "license": "MIT",
+  "dependencies": {
+    "popular-movie-quotes": "^1.2.4"
+  }
+}

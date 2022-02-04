@@ -1,0 +1,14 @@
+{
+  "name": "first-server",
+  "version": "1.0.0",
+  "description": "The world's simplest NodeJS web server",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Glenn Poorman",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

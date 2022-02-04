@@ -1,0 +1,23 @@
+{
+  "name": "promises-await",
+  "version": "1.0.0",
+  "description": "Async functions in JS using Promise and await",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "nodemon server/server.js"
+  },
+  "author": "Glenn Poorman",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "jsonfile": "^6.0.1",
+    "popular-movie-quotes": "^1.2.4"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "server/*.json"
+    ]
+  }
+}

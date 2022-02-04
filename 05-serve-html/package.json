@@ -1,0 +1,14 @@
+{
+  "name": "serve-html",
+  "version": "1.0.0",
+  "description": "Serving up some HTML",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Glenn Poorman",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

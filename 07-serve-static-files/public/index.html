@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Serve Static Files</title>
+  <link rel=stylesheet type="text/css" href="styles.css">
+  <script src="clock.js" defer></script>
+</head>
+
+<body>
+  <h1>Serving Up Even More</h1>
+  <div class='my-paragraph'>
+    Most websites are way more than just 'index.html'. This page, for example, uses
+    the link tag to reference an external style sheet <i>styles.css</i>, uses the
+    script tag to reference an external JavaScript file, and uses several img tags to
+    reference several jpg images. Each of these tags will result in an additional
+    GET request sent to the server for the contents of the referenced file. With that
+    in mind, this server is written to handle several different types of files.
+    <br><br>
+    The overall look of the site is controlled by the style sheet. The digital clock
+    below is controlled by some client side JavaScript. The images, of course, are
+    external files.
+  </div>
+
+  <h2>Digital Clock (scripting)</h2>
+  <span id='clock'></span>
+
+  <h2>Slides (image files)</h2>
+  <div class='my-paragraph'>
+    <img src="slide-1.jpg">
+    <img src="slide-2.jpg">
+    <img src="slide-3.jpg">
+    <img src="slide-4.jpg">
+  </div>
+
+  <footer>
+    &copy;2017, The Author, All Rights Reserved.
+  </footer>
+</body>
+</html>

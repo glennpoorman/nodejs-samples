@@ -1,0 +1,23 @@
+{
+  "name": "query-delete",
+  "version": "1.0.0",
+  "description": "Query parameters and DELETE requests",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "nodemon server/server.js"
+  },
+  "author": "Glenn Poorman",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "jsonfile": "^6.0.1",
+    "popular-movie-quotes": "^1.2.4"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "server/*.json"
+    ]
+  }
+}

@@ -1,0 +1,96 @@
+body {
+  font-family : Calibri, verdana, Geneva, sans-serif;
+  font-size : 18px;
+  margin : 0px;
+  padding : 0px;
+}
+
+header {
+  background : steelBlue;
+  box-shadow : 0px 5px 5px grey;
+  color : white;
+  font-size : 48px;
+  font-style : italic;
+  margin : 0px 0px 24px 0px;
+  padding : 8px;
+  text-align : center;
+  text-shadow : 3px 3px 4px lightGrey;
+}
+
+.app-container {
+  margin-left : auto;
+  margin-right : auto;
+  width : 80%;
+}
+
+.app-container button {
+  border-radius : 8px;
+  margin-right : 6px;
+  margin-top : 18px;
+  outline: none;
+  padding : 6px 18px;
+  width : 160px;
+}
+
+.app-container h2 {
+  letter-spacing : 0.08em;
+  margin-bottom : 0.4em;
+  margin-top : 1.2em;
+}
+
+.movie-quote {
+  background : steelBlue;
+  border-radius : 8px;
+  box-shadow : 5px 5px 5px grey;
+  box-sizing : border-box;
+  color : white;
+  padding : 16px;
+}
+
+.favorite-quote {
+  background : steelBlue;
+  border-radius : 0;
+  border-top : 1px solid white;
+  box-shadow : 5px 5px 5px grey;
+  box-sizing : border-box;
+  color : white;
+  padding : 8px 16px;
+}
+
+.favorite-quote button {
+  border-radius : 0;
+  float : right;
+  margin-top : 8px;
+  padding : 2px 12px;
+  width : auto;
+}
+
+.quote-container > :first-child {
+  font-style : italic;
+}
+
+.quote-container > :last-child {
+  font-weight : bold;
+}
+
+.quote-container > :last-child:before {
+  content : "-";
+  margin-right : 6px;
+}
+
+.logout-button {
+  float : right;
+  margin-right : 0 !important;
+}
+
+.login-container {
+  text-align : center
+}
+
+.login-container button {
+  background : url(github.png) no-repeat center;
+  background-size : 100% 100%;
+  border : 0;
+  width : 153px;
+  height : 44px;
+}

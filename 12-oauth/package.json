@@ -1,0 +1,23 @@
+{
+  "name": "oauth",
+  "version": "1.0.0",
+  "description": "Authorization using OAuth2",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "nodemon server/server.js"
+  },
+  "author": "Glenn Poorman",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "jsonfile": "^6.0.1",
+    "popular-movie-quotes": "^1.2.4"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "server/*.json"
+    ]
+  }
+}

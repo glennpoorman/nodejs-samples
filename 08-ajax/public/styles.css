@@ -1,0 +1,55 @@
+body {
+  font-family : Calibri, verdana, Geneva, sans-serif;
+  font-size : 18px;
+  margin : 0px;
+  padding : 0px;
+}
+
+header {
+  background : steelBlue;
+  box-shadow : 0px 5px 5px grey;
+  color : white;
+  font-size : 48px;
+  font-style : italic;
+  margin : 0px 0px 24px 0px;
+  padding : 8px;
+  text-align : center;
+  text-shadow : 3px 3px 4px lightGrey;
+}
+
+.app-container {
+  margin-left : auto;
+  margin-right : auto;
+  width : 80%;
+}
+
+.app-container button {
+  border-radius : 8px;
+  margin-right : 6px;
+  margin-top : 18px;
+  outline: none;
+  padding : 6px 18px;
+  width : 160px;
+}
+
+.movie-quote {
+  background : steelBlue;
+  border-radius : 8px;
+  box-shadow : 5px 5px 5px grey;
+  box-sizing : border-box;
+  color : white;
+  padding : 16px;
+}
+
+.movie-quote > :first-child {
+  font-style : italic;
+}
+
+.movie-quote > :last-child {
+  font-weight : bold;
+}
+
+.movie-quote > :last-child:before {
+  content : "-";
+  margin-right : 6px;
+}

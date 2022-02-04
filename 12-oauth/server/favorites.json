@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "quote": "\"Toto, I've a feeling we're not in Kansas anymore.\"",
+    "film": "The Wizard of Oz"
+  },
+  {
+    "id": 2,
+    "quote": "\"You know how to whistle, don't you, Steve? You just put your lips together and blow.\"",
+    "film": "To Have and Have Not"
+  },
+  {
+    "id": 3,
+    "quote": "\"Snap out of it!\"",
+    "film": "Moonstruck"
+  },
+  {
+    "id": 4,
+    "quote": "\"Of all the gin joints in all the towns in all the world, she walks into mine.\"",
+    "film": "Casablanca"
+  }
+]
