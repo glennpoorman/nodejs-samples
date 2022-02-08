@@ -18,9 +18,6 @@ opposed to hard coding the name and location of the file).
 Try It
 ------
 
-Register the sample application with GitHub. Fill in the client id and client secret properties
-in "server/config.js". 
-
 Start the server by running "node" or "npm start" from the command line.
 
 Point your web browser to "http://localhost:3000". Visually this sample behaves identical to

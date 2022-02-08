@@ -17,9 +17,6 @@ hasn't changed at all. Under the hood though, we've re-written quite a bit of co
 Try It
 ------
 
-Register the sample application with GitHub. Fill in the client id and client secret properties
-in "server/config.js".
-
 Start the server by running "node" or "npm start" from the command line.
 
 Point your web browser to "http://localhost:3000". This samples behaves identically to the

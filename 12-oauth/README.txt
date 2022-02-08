@@ -62,8 +62,11 @@ What this app does
 
 Any application that wants to use an external authorization server must register with that
 server. This is a one time registration that the app developer does and is generally done
-through a web portal. There is no standard and they all handle it a little differently so
-we'll focus on GitHub since that's the server we're using for this sample.
+through a web portal. For this sample, I've already registered the app which means you can
+build it and run it. If you want so see how registration works, you can register your own
+and replace the data in "server/config.js". There is no standard for registration and they
+all handle it a little differently. Here we'll focus on GitHub since that's the server we're
+using for this sample. To register then, use the following steps:
 
   1. Login to GitHub.
   2. In the menu under your profile picture, select "Settings".
@@ -118,12 +121,9 @@ into the app.
 Try It
 ------
 
-Before you can run this app, you need to register with GitHub. I had originally intended to
-provide information such that you could use the sample I registered but opted to have the
-reader do this for two reasons. The first is that it's good practice. The second is that it
-required me to submit the client id and secret which, while harmless in this sample, should
-never be done. So before you run anything, follow the instructions above on registering the
-sample with GitHub and then fill in the client id and secret in "server/config.js".
+Optionally register this application with GitHub. I've already done this and included the
+client id and secret in "server/config.js". If you want to see how it's done though, you
+can register your own version and replace the information in that file.
 
 Start the server by running "node" or "npm start" from the command line.
 

@@ -24,11 +24,10 @@ of workflow.
 Try It
 ------
 
-For any of the authorization servers you want to try, you will need to register the sample
-application with that server and copy the generated client id and client secret. The web
-portals for the various servers are all different. I included step by step instructions for
-registering with GitHub in the "oauth" sample. For the other servers, I'll just include the
-urls and let you go figure it out.
+The file "server/config.js" contains client id and secret information for all four of the
+authorization servers. Just like the previous samples that used only GitHub, you can try
+registering your own in order to familiarize yourself with the registration process. For
+the various servers, you can visit the developer portals at the following urls.
 
 1. https://www.github.com
 2. https://developers.google.com/
