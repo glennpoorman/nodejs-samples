@@ -33,7 +33,7 @@ const server = http.createServer((req, res) => {
     fs.readFile('index.html', (err, contents) => {
       if (err) {
         res.writeHead(404, { 'Content-Type' : 'text/json' });
-        res.end(JSON.stringify({ error: 'Error: 404 page not found' }));
+        res.end(JSON.stringify({ error : '404 page not found' }));
       } else {
         res.writeHead(200, { 'Content-Type' : 'text/html' });
         res.end(contents);
