@@ -28,13 +28,13 @@ exports.sendJSON = (res, code, data) => exports.sendResponse(res, code, 'json', 
 
 // Write and send a standard 404 page not found response.
 //
-exports.send404 = (res) => exports.sendJSON(res, 404, { error : 'Error: 404 page not found' });
+exports.send404 = (res) => exports.sendJSON(res, 404, { error : '404 page not found' });
 
 // Send the contents of the requested file in the body of the given response.
 //
 exports.sendFile = (req, res) => {
   const filename = (req.url === '/') ? 'index.html' : req.url;
-  console.log(filename);
+
   fs.readFile(path.join('public', filename), (err, contents) => {
       if (err) {
         exports.send404(res);

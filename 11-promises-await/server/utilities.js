@@ -30,7 +30,7 @@ exports.sendJSON = (res, code, data) => exports.sendResponse(res, code, 'json', 
 
 // Write and send a standard 404 page not found response.
 //
-exports.send404 = (res) => exports.sendJSON(res, 404, { error : 'Error: 404 page not found' });
+exports.send404 = (res) => exports.sendJSON(res, 404, { error : '404 page not found' });
 
 // The utility to read a request/response body from a given request has been re-written
 // to use a JavaScript "Promise". Promises provide a much cleaner way to work with

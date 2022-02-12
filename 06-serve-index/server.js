@@ -44,7 +44,7 @@ const server = http.createServer((req, res) => {
   //
   } else {
     res.writeHead(404, { 'Content-Type' : 'text/json' });
-    res.end(JSON.stringify({ error : 'Error: 404 page not found' }));
+    res.end(JSON.stringify({ error : '404 page not found' }));
   }
 });
 

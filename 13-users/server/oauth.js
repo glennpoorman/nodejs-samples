@@ -82,6 +82,6 @@ exports.sendToken = async (req, res) => {
   }
   catch (err)
   {
-    sendJSON(res, 500, { error : 'ERROR: parsing token' });
+    sendJSON(res, 500, { error : 'parsing token' });
   }
 };

@@ -30,7 +30,7 @@ exports.sendJSON = (res, code, data) => exports.sendResponse(res, code, 'json', 
 
 // Write and send a standard 404 page not found response.
 //
-exports.send404 = (res) => exports.sendJSON(res, 404, { error : 'Error: 404 page not found' });
+exports.send404 = (res) => exports.sendJSON(res, 404, { error : '404 page not found' });
 
 // Helper utility to fetch data from a request or response body.
 //

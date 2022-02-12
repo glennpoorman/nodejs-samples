@@ -43,7 +43,7 @@ exports.addFavorite = async (req, res) => {
 
     const quoteObj = req.body;
     if (!quoteObj.quote || !quoteObj.film) {
-      throw new Error('ERROR: invalid quote');
+      throw new Error('invalid quote');
     }
 
     let quotes = [];
@@ -52,7 +52,7 @@ exports.addFavorite = async (req, res) => {
       quotes = await readJson(theFile);
 
     if (quotes.find((q) => (q.quote == quoteObj.quote && q.film == quoteObj.film))) {
-      res.status(400).json({ error : 'ERROR: already a favorite quote' });
+      res.status(400).json({ error : 'already a favorite quote' });
     } else {
       quoteObj.id = nextId(quotes);
       quotes.push(quoteObj);
@@ -60,7 +60,7 @@ exports.addFavorite = async (req, res) => {
       res.status(201).json(quoteObj);
     }
   } catch(e) {
-    res.status(500).json({ error : 'ERROR: writing favorites data' });
+    res.status(500).json({ error : 'writing favorites data' });
   }
 };
 
@@ -73,24 +73,24 @@ exports.deleteFavorite = async (req, res) => {
 
     const theFile = favoritesFile(req);
     if (!fs.existsSync(theFile)) {
-      throw new Error('ERROR: file does not exist.');
+      throw new Error('file does not exist.');
     }
 
     const id = parseInt(req.query.id);
     if (isNaN(id)) {
-      throw new Error('ERROR: bad id specification');
+      throw new Error('bad id specification');
     }
 
     let quotes = await readJson(theFile);
     const ix = quotes.findIndex(quoteObj => (quoteObj.id === id));
     if (ix < 0) {
-      throw new Error('ERROR: id out of range');
+      throw new Error('id out of range');
     }
 
     quotes.splice(ix, 1);
     await writeJson(theFile, quotes, { spaces : 2 });
-    res.status(200).json({ message : 'Quote successfully remove' });
+    res.status(200).json({ message : 'Quote successfully removed' });
   } catch(e) {
-    res.status(500).json({ error : 'ERROR: writing favorites data' });
+    res.status(500).json({ error : 'writing favorites data' });
   }
 };

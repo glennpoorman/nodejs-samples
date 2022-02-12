@@ -54,7 +54,7 @@ exports.addFavorite = async (req, res) => {
     const body = await getBody(req);
     const quoteObj = JSON.parse(body);
     if (!quoteObj.quote || !quoteObj.film) {
-      throw new Error('ERROR: invalid quote');
+      throw new Error('invalid quote');
     }
 
     // Initialize the quotes list to be an empty array and then call the utility to fetch
@@ -73,7 +73,7 @@ exports.addFavorite = async (req, res) => {
     // if that file didn't already exist, we'll be creating it here.
     //
     if (quotes.find((q) => (q.quote == quoteObj.quote && q.film == quoteObj.film))) {
-      sendJSON(res, 400, { error : 'ERROR: already a favorite quote' });
+      sendJSON(res, 400, { error : 'already a favorite quote' });
     } else {
       quoteObj.id = nextId(quotes);
       quotes.push(quoteObj);
@@ -81,7 +81,7 @@ exports.addFavorite = async (req, res) => {
       sendJSON(res, 201, quoteObj);
     }
   } catch(e) {
-    sendJSON(res, 500, { error : 'ERROR: writing favorites data' });
+    sendJSON(res, 500, { error : 'writing favorites data' });
   }
 };
 
@@ -101,19 +101,19 @@ exports.deleteFavorite = async (req, res) => {
     //
     const theFile = favoritesFile(req);
     if (!fs.existsSync(theFile)) {
-      throw new Error('ERROR: file does not exist.');
+      throw new Error('file does not exist.');
     }
 
     const url = new URL(req.url, `http://${req.headers.host}/`);
     const id = parseInt(url.searchParams.get('id'));
     if (isNaN(id)) {
-      throw new Error('ERROR: bad id specification');
+      throw new Error('bad id specification');
     }
 
     let quotes = await readJson(theFile);
     const ix = quotes.findIndex(quoteObj => (quoteObj.id === id));
     if (ix < 0) {
-      throw new Error('ERROR: id out of range');
+      throw new Error('id out of range');
     }
 
     // Note that after the deletion, we use the user-specified filename to write the
@@ -121,8 +121,8 @@ exports.deleteFavorite = async (req, res) => {
     //
     quotes.splice(ix, 1);
     await writeJson(theFile, quotes, { spaces : 2 });
-    sendJSON(res, 200, { message : 'Quote successfully remove' });
+    sendJSON(res, 200, { message : 'Quote successfully removed' });
   } catch(e) {
-    sendJSON(res, 500, { error : 'ERROR: writing favorites data' });
+    sendJSON(res, 500, { error : 'writing favorites data' });
   }
 };

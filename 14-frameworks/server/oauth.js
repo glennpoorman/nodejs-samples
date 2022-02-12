@@ -81,6 +81,6 @@ exports.sendToken = async (req, res) => {
   }
   catch (err)
   {
-    res.status(500).json({ error : 'ERROR: getting access token' });
+    res.status(500).json({ error : 'getting access token' });
   }
 };

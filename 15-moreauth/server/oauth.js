@@ -87,7 +87,7 @@ exports.authorize = (req, res) => {
       urlStr = authorizeForge();
       break;
     default:
-      res.status(500).json({ error : 'ERROR: bad authorization server' });
+      res.status(500).json({ error : 'bad authorization server' });
       break;
   }
 
@@ -224,7 +224,7 @@ exports.sendToken = async (req, res) => {
         token = await tokenForge(req.query.code);
         break;
       default:
-        res.status(500).json({ error : 'ERROR: bad authorization server' });
+        res.status(500).json({ error : 'bad authorization server' });
         break;
     }
 
@@ -232,6 +232,6 @@ exports.sendToken = async (req, res) => {
   }
   catch (err)
   {
-    res.status(500).json({ error : 'ERROR: getting access token' });
+    res.status(500).json({ error : 'getting access token' });
   }
 };
