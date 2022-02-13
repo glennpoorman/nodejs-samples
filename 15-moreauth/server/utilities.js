@@ -9,6 +9,28 @@ exports.readJson = util.promisify(jsonfile.readFile);
 //
 exports.writeJson = util.promisify(jsonfile.writeFile);
 
+// HttpError class extends the standard Error class.
+//
+exports.HttpError = class HttpError extends Error
+{
+  constructor(code, msg)
+  {
+    super(msg);
+    this.code = code;
+  }
+}
+
+// Functon takes an incoming error object and sends the error back in the incoming
+// response.
+// 
+exports.sendError = (res, err) => {
+  if (err instanceof HttpError) {
+    res.status(err.code).json({ error : err.message });
+  } else {
+    res.status(500).json({ error : err.message });
+  }
+}
+
 // Function converts an input Javascript object into a URL query string and
 // returns the resulting string.
 //

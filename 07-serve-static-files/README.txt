@@ -9,6 +9,13 @@ Try It
 
 Again start the server by running "node" or "npm start" from the command line.
 
+Note that "server.js" has moved into the "server" sub-folder. For the server to work though, you
+need to run node from the top level folder which means you need to run:
+
+  C:\NodeJS\07-server-static-file>node server\server.js
+
+At this point (and with the rest of the samples), it's probably best just to use "npm start".
+
 The best way to see this particular sample in action is to test via a web browser. Consider the
 following HTML:
 

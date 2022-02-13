@@ -79,7 +79,7 @@ code ends up looking more like synchronous code and reads even cleaner still.
 Try It
 ------
 
-Start the server by running "node" or "npm start" from the command line.
+Start the server by running "npm start" from the command line.
 
 Point your web browser to "http://localhost:3000". Note the web page is identical to the previous
 sample. All that's new in this sample is coding under the hood.
@@ -96,6 +96,13 @@ What's Different?
   The "sendFile" function is re-written to use the promise-ready version of "readFile" and
   introduces the "async" and "await" keywords.
 
+  The "HttpError" class extends the standard "Error" class to take an Http error code in the
+  constructor in addition to the descriptive message.
+
+  The "sendError" function takes an error object and sends the error back in a response. If 
+  the error object is an instance of the new HttpError class, we use the Http code stored in
+  the error object. Otherwise we send back a 500 server error.
+
 * "server/favorites.js". The functions "sendFavorites", "addFavorite", and "deleteFavorite"
   are all re-written to use the promise-ready versions of the functions "jsonfile.readFile",
   "jsonfile.writFile", and "getBody". All three functions are marked as "async" and use the
@@ -103,3 +110,9 @@ What's Different?
 
   Note that the "addFavorite" function is especially cleaned up using the new syntax as it
   makes three difference asynchronous calls.
+
+  Also note that we introduce using exceptions to report errors. Lines that previously sent 
+  error codes in a response are now throwing exceptions. We still need to eventually return
+  these errors in response codes though so any code that may throw an exception is wrapped
+  in a try/catch and the catch block converts the caught error object into an Http response.
+  

@@ -28,7 +28,7 @@ exports.sendJSON = (res, code, data) => exports.sendResponse(res, code, 'json', 
 
 // Write and send a standard 404 page not found response.
 //
-exports.send404 = (res) => exports.sendJSON(res, 404, { error : '404 page not found' });
+exports.send404 = (res) => exports.sendJSON(res, 404, { error : 'Not found' });
 
 // Send the contents of the given file in the body of the given response.
 //
@@ -69,6 +69,6 @@ exports.getBody = (req, cb) => {
     cb(null, body);
   })
   .on('error', () => {
-    cb(Error('Error parsing request body'));
+    cb(Error('error parsing request body'));
   });
 };

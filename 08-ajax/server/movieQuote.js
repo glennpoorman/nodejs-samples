@@ -20,7 +20,7 @@ exports.sendQuote = (req, res) => {
     // Originally we used a third party package called "movie-quotes" that return the
     // random quote in the form of a single string that we had to parse to create the
     // object that the client was expecting. I've since changed these samples to use
-    // a different quite generator. This one returns the quotes as JSON objects but the
+    // a different quote generator. This one returns the quotes as JSON objects but the
     // definition of these objects differs from our original spec. This is handy though
     // as it demonstrates that things can change under the covers but you can still
     // make sure that your original spec is honored so that your client still works.

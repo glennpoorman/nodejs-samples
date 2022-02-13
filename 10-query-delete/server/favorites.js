@@ -32,16 +32,16 @@ exports.addFavorite = (req, res) =>
 
   getBody(req, (err, body) => {
     if (err) {
-      sendJSON(res, 500, { error : 'writing favorites data' });
+      sendJSON(res, 400, { error : 'Bad request' });
     } else {
       const quoteObj = JSON.parse(body);
       if (!quoteObj.quote || !quoteObj.film) {
-        sendJSON(res, 400, { error : 'invalid quote' });
+        sendJSON(res, 400, { error : 'Invalid quote' });
       } else {
         jsonfile.readFile(favoritesFile, (err, quotes) => {
           quotes = quotes || [];
           if (quotes.find((q) => (q.quote == quoteObj.quote && q.film == quoteObj.film))) {
-            sendJSON(res, 400, { error : 'already a favorite quote' });
+            sendJSON(res, 403, { error : 'Duplicate quote' });
           } else {
 
             // Note that in this sample we add a third property to the quote object and
@@ -53,7 +53,7 @@ exports.addFavorite = (req, res) =>
             quotes.push(quoteObj);
             jsonfile.writeFile(favoritesFile, quotes, { spaces : 2 }, (err) => {
               if (err) {
-                sendJSON(res, 500, { error : 'writing favorites data' });
+                sendJSON(res, 500, { error : 'Writing favorites data' });
               } else {
                 sendJSON(res, 201, quoteObj);
               }
@@ -97,7 +97,7 @@ exports.deleteFavorite = (req, res) => {
   // Send back an error if we couldn't parse the id.
   //
   if (isNaN(id)) {
-    sendJSON(res, 400, { error : 'bad id specification' });
+    sendJSON(res, 400, { error : 'Bad id specification' });
 
   // Assuming we parsed a good index from the query parameter, we have to use it to remove the quote
   // from the file. Read the entirety of the file into memory and send back an error if there is a
@@ -106,7 +106,7 @@ exports.deleteFavorite = (req, res) => {
   } else {
     jsonfile.readFile(favoritesFile, (err, quotes) => {
       if (err) {
-        sendJSON(res, 500, { error : 'reading favorites file' });
+        sendJSON(res, 500, { error : 'Reading favorites file' });
       } else {
 
         // Locate the index of the item in the array whose id matches the id specified in the
@@ -120,12 +120,12 @@ exports.deleteFavorite = (req, res) => {
         // our quotes array and write the entire file back to disk.
         //
         if (ix < 0) {
-          sendJSON(res, 400, { error : 'id out of range' });
+          sendJSON(res, 400, { error : 'Id out of range' });
         } else {
           quotes.splice(ix, 1);
           jsonfile.writeFile(favoritesFile, quotes, { spaces : 2 }, (err) => {
             if (err) {
-              sendJSON(res, 500, { error : 'writing favorites data' });
+              sendJSON(res, 500, { error : 'Writing favorites data' });
             } else {
               sendJSON(res, 200, { message : 'Quote successfully removed' });
             }

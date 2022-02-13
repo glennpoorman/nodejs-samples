@@ -30,7 +30,7 @@ exports.sendJSON = (res, code, data) => exports.sendResponse(res, code, 'json', 
 
 // Write and send a standard 404 page not found response.
 //
-exports.send404 = (res) => exports.sendJSON(res, 404, { error : '404 page not found' });
+exports.send404 = (res) => exports.sendJSON(res, 404, { error : 'Not found' });
 
 // Helper utility to fetch data from a request or response body.
 //
@@ -71,6 +71,29 @@ exports.sendFile = async (req, res) => {
     exports.send404(res);
   }
 };
+
+// HttpError class extends the standard Error class. In addition to the descriptive
+// message, this class also takes an HTTP error code in the constructor.
+//
+exports.HttpError = class HttpError extends Error
+{
+  constructor(code, msg)
+  {
+    super(msg);
+    this.code = code;
+  }
+}
+
+// Functon takes an incoming error object and sends the error back in the incoming
+// response.
+// 
+exports.sendError = (res, err) => {
+  if (err instanceof HttpError) {
+    exports.sendJSON(res, err.code, { error : err.message });
+  } else {
+    exports.sendJSON(res, 500, { error : err.message });
+  }
+}
 
 // Send a response specifically designed to cause the calling browser to redirect
 // to another page/URL. This is done by writing the location into the request

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { sendJSON, getBody, readJson, writeJson, parseCookies } = require('./utilities');
+const { sendJSON, getBody, readJson, writeJson, parseCookies, HttpError, sendError } = require('./utilities');
 
 // Utility goes through the quotes in the given quotes array and determines the next available id
 // that can be used.
@@ -54,7 +54,7 @@ exports.addFavorite = async (req, res) => {
     const body = await getBody(req);
     const quoteObj = JSON.parse(body);
     if (!quoteObj.quote || !quoteObj.film) {
-      throw new Error('invalid quote');
+      throw new HttpError(400, 'Invalid quote');
     }
 
     // Initialize the quotes list to be an empty array and then call the utility to fetch
@@ -73,7 +73,7 @@ exports.addFavorite = async (req, res) => {
     // if that file didn't already exist, we'll be creating it here.
     //
     if (quotes.find((q) => (q.quote == quoteObj.quote && q.film == quoteObj.film))) {
-      sendJSON(res, 400, { error : 'already a favorite quote' });
+      throw new HttpError(403, 'Duplicate quote');
     } else {
       quoteObj.id = nextId(quotes);
       quotes.push(quoteObj);
@@ -81,7 +81,7 @@ exports.addFavorite = async (req, res) => {
       sendJSON(res, 201, quoteObj);
     }
   } catch(e) {
-    sendJSON(res, 500, { error : 'writing favorites data' });
+    sendError(res, e);
   }
 };
 
@@ -95,25 +95,22 @@ exports.deleteFavorite = async (req, res) => {
 
   try {
 
-    // Here we'll start by calling the utility to create the user filename. Before we do
-    // anything else, check to see that the file exists and throw an exception if it doesn't.
-    // There's no point in doing anything else if the file isn't there.
+    // In the previous sample, the favorites file was hard coded. Now we're using a
+    // file based on the user id so start by using the incoming user id to create the
+    // user filename.
     //
     const theFile = favoritesFile(req);
-    if (!fs.existsSync(theFile)) {
-      throw new Error('file does not exist.');
-    }
 
     const url = new URL(req.url, `http://${req.headers.host}/`);
     const id = parseInt(url.searchParams.get('id'));
     if (isNaN(id)) {
-      throw new Error('bad id specification');
+      throw new HttpError(400, 'Bad id specification');
     }
 
     let quotes = await readJson(theFile);
     const ix = quotes.findIndex(quoteObj => (quoteObj.id === id));
     if (ix < 0) {
-      throw new Error('id out of range');
+      throw new HttpError(400, 'Id out of range');
     }
 
     // Note that after the deletion, we use the user-specified filename to write the
@@ -123,6 +120,6 @@ exports.deleteFavorite = async (req, res) => {
     await writeJson(theFile, quotes, { spaces : 2 });
     sendJSON(res, 200, { message : 'Quote successfully removed' });
   } catch(e) {
-    sendJSON(res, 500, { error : 'writing favorites data' });
+    sendError(res, e);
   }
 };

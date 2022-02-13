@@ -17,7 +17,7 @@ hasn't changed at all. Under the hood though, we've re-written quite a bit of co
 Try It
 ------
 
-Start the server by running "node" or "npm start" from the command line.
+Start the server by running "npm start" from the command line.
 
 Point your web browser to "http://localhost:3000". This samples behaves identically to the
 previous sample in every way. All of the changes involved code cleanup in both the server

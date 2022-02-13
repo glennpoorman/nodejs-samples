@@ -125,7 +125,7 @@ Optionally register this application with GitHub. I've already done this and inc
 client id and secret in "server/config.js". If you want to see how it's done though, you
 can register your own version and replace the information in that file.
 
-Start the server by running "node" or "npm start" from the command line.
+Start the server by running "npm start" from the command line.
 
 Point your web browser to "http://localhost:3000". In this case, instead of going directly to
 the movie quotes page, a login page is displayed with a single "Login with GitHub" button. In

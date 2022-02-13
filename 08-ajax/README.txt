@@ -15,7 +15,7 @@ response containing the quote which is then displayed on the page.
 Try It
 ------
 
-Start the server by running "node server" or "npm start" from the command line.
+Start the server by running "npm start" from the command line.
 
 Point your web browser to "http://localhost:3000". Note the simple web page displayed containing
 a single movie quote and a button underneath that reads "Next Quote". Now push the button and note

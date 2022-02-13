@@ -87,7 +87,7 @@ exports.authorize = (req, res) => {
       urlStr = authorizeForge();
       break;
     default:
-      res.status(500).json({ error : 'bad authorization server' });
+      res.status(500).json({ error : 'Bad authorization server' });
       break;
   }
 
@@ -224,14 +224,14 @@ exports.sendToken = async (req, res) => {
         token = await tokenForge(req.query.code);
         break;
       default:
-        res.status(500).json({ error : 'bad authorization server' });
+        res.status(500).json({ error : 'Bad authorization server' });
         break;
     }
 
     res.cookie('movie-quote-token', token).redirect('/');
   }
-  catch (err)
+  catch (e)
   {
-    res.status(500).json({ error : 'getting access token' });
+    res.status(500).json({ error : e.message });
   }
 };

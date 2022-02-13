@@ -48,7 +48,7 @@ exports.addFavorite = (req, res) =>
     // Send back an error code if the request body is not successfully read.
     //
     if (err) {
-      sendJSON(res, 500, { error : 'writing favorites data' });
+      sendJSON(res, 400, { error : 'Bad request' });
     } else {
 
       // Create a quote object from the body. Make sure the object contains the two properties
@@ -56,7 +56,7 @@ exports.addFavorite = (req, res) =>
       //
       const quoteObj = JSON.parse(body);
       if (!quoteObj.quote || !quoteObj.film) {
-        sendJSON(res, 400, { error : 'invalid quote' });
+        sendJSON(res, 400, { error : 'Invalid quote' });
 
       // The quote object is valid. Read all of the quotes from the favorites file. If the quote
       // is not already in the favorites list, add the new quote to the array. Then turn around
@@ -66,12 +66,12 @@ exports.addFavorite = (req, res) =>
         jsonfile.readFile(favoritesFile, (err, quotes) => {
           quotes = quotes || [];
           if (quotes.find((q) => (q.quote == quoteObj.quote && q.film == quoteObj.film))) {
-            sendJSON(res, 400, { error : 'already a favorite quote' });
+            sendJSON(res, 403, { error : 'Duplicate quote' });
           } else {
             quotes.push(quoteObj);
             jsonfile.writeFile(favoritesFile, quotes, { spaces : 2 }, (err) => {
               if (err) {
-                sendJSON(res, 500, { error : 'writing favorites data' });
+                sendJSON(res, 500, { error : 'Writing favorites data' });
               } else {
                 sendJSON(res, 201, quoteObj);
               }

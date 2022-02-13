@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { readJson, writeJson } = require('./utilities');
+const { readJson, writeJson, HttpError, sendError } = require('./utilities');
 
 // Utility goes through the quotes in the given quotes array and determines the next available id
 // that can be used.
@@ -53,7 +53,7 @@ exports.addFavorite = async (req, res) => {
     //
     const quoteObj = req.body;
     if (!quoteObj.quote || !quoteObj.film) {
-      throw new Error('invalid quote');
+      throw new HttpError(400, 'Invalid quote');
     }
 
     let quotes = [];
@@ -65,7 +65,7 @@ exports.addFavorite = async (req, res) => {
     // status code and response body on the outgoing responses.
     //
     if (quotes.find((q) => (q.quote == quoteObj.quote && q.film == quoteObj.film))) {
-      res.status(400).json({ error : 'already a favorite quote' });
+      throw new HttpError(304, 'Duplicate quote');
     } else {
       quoteObj.id = nextId(quotes);
       quotes.push(quoteObj);
@@ -73,7 +73,7 @@ exports.addFavorite = async (req, res) => {
       res.status(201).json(quoteObj);
     }
   } catch(e) {
-    res.status(500).json({ error : 'writing favorites data' });
+    sendError(e);
   }
 };
 
@@ -85,9 +85,6 @@ exports.deleteFavorite = async (req, res) => {
   try {
 
     const theFile = favoritesFile(req);
-    if (!fs.existsSync(theFile)) {
-      throw new Error('file does not exist.');
-    }
 
     // Note that in addition to delivering a request body in the "req.body" property, the
     // "bodyParser" middleware also automatically parses the query string from any incoming
@@ -96,13 +93,13 @@ exports.deleteFavorite = async (req, res) => {
     //
     const id = parseInt(req.query.id);
     if (isNaN(id)) {
-      throw new Error('bad id specification');
+      throw new HttpError(400, 'Bad id specification');
     }
 
     let quotes = await readJson(theFile);
     const ix = quotes.findIndex(quoteObj => (quoteObj.id === id));
     if (ix < 0) {
-      throw new Error('id out of range');
+      throw new HttpError(400, 'Id out of range');
     }
 
     // Note the use of the "status" and "json" methods provided by "Express" fill in the
@@ -112,6 +109,6 @@ exports.deleteFavorite = async (req, res) => {
     await writeJson(theFile, quotes, { spaces : 2 });
     res.status(200).json({ message : 'Quote successfully removed' });
   } catch(e) {
-    res.status(500).json({ error : 'writing favorites data' });
+    sendError(e);
   }
 };

@@ -16,7 +16,7 @@ use it in our DELETE request to delete the quote from the favorites list.
 Try It
 ------
 
-Start the server by running "node" or "npm start" from the command line.
+Start the server by running "npm start" from the command line.
 
 Point your web browser to "http://localhost:3000". Note the web page is virtually identical to the
 previous sample except that all of the favorites in the favorites list have a small "Delete" button

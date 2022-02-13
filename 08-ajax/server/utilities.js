@@ -28,7 +28,7 @@ exports.sendJSON = (res, code, data) => exports.sendResponse(res, code, 'json', 
 
 // Write and send a standard 404 page not found response.
 //
-exports.send404 = (res) => exports.sendJSON(res, 404, { error : '404 page not found' });
+exports.send404 = (res) => exports.sendJSON(res, 404, { error : 'Not found' });
 
 // Send the contents of the requested file in the body of the given response.
 //

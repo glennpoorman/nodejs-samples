@@ -18,7 +18,7 @@ opposed to hard coding the name and location of the file).
 Try It
 ------
 
-Start the server by running "node" or "npm start" from the command line.
+Start the server by running "npm start" from the command line.
 
 Point your web browser to "http://localhost:3000". Visually this sample behaves identical to
 the previous sample except that upon first run, the favorites list is likely empty. In this

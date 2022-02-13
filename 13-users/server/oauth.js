@@ -80,8 +80,8 @@ exports.sendToken = async (req, res) => {
     setCookie(res, 'movie-quote-token', `${tokenObj.access_token}.${idObj.id}`);
     redirectTo(res, '/');
   }
-  catch (err)
+  catch (e)
   {
-    sendJSON(res, 500, { error : 'parsing token' });
+    sendJSON(res, 500, { error : e.message });
   }
 };

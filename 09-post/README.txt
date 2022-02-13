@@ -12,7 +12,7 @@ also introduce a POST request (for adding a favorite).
 Try It
 ------
 
-Start the server by running "node" or "npm start" from the command line.
+Start the server by running "npm start" from the command line.
 
 Point your web browser to "http://localhost:3000". Note that the same web page is displayed
 containing and single movie quote and a button allowing you to get a new quote. In addition, the

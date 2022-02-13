@@ -6,6 +6,22 @@ only process a GET request to the url "/". In response to that request, we send 
 HTML in the response. For any other type of request, we send back a standard 404 error meaning the
 page/resource was not found.
 
+A note about errors
+-------------------
+
+This is the first sample that returns an error. Error codes are split into groups where:
+
+* 1xx information response - the request was received, continuing processing.
+* 2xx successful – the request was successfully received, understood, and accepted
+* 3xx redirection – further action needs to be taken in order to complete the request
+* 4xx client error – the request contains bad syntax or cannot be fulfilled
+* 5xx server error – the server failed to fulfil an apparently valid request
+
+Here we return a 404 which is the standard code for when a requested resource is not found. You
+can get a break down of the different codes in the following Wikipedia article.
+
+* https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+
 Try It
 ------
 

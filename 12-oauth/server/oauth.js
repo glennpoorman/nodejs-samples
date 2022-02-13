@@ -124,8 +124,8 @@ exports.sendToken = (req, res) => {
         setCookie(res, 'movie-quote-token', `${obj.access_token}`);
         redirectTo(res, '/');
       })
-      .catch((err) => {
-        sendJSON(res, 500, { error : 'parsing token' });
+      .catch((e) => {
+        sendJSON(res, 500, { error : e.message });
       });
   });
 

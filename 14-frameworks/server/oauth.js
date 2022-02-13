@@ -79,8 +79,8 @@ exports.sendToken = async (req, res) => {
     //
     res.cookie('movie-quote-token', `${access_token}.${id}`).redirect('/');
   }
-  catch (err)
+  catch (e)
   {
-    res.status(500).json({ error : 'getting access token' });
+    res.status(500).json({ error : e.message });
   }
 };
