@@ -76,7 +76,7 @@ exports.sendFile = async (req, res) => {
 // HttpError class extends the standard Error class. In addition to the descriptive
 // message, this class also takes an HTTP error code in the constructor.
 //
-exports.HttpError = class HttpError extends Error
+class HttpError extends Error
 {
   constructor(code, msg)
   {
@@ -84,6 +84,7 @@ exports.HttpError = class HttpError extends Error
     this.code = code;
   }
 }
+exports.HttpError = HttpError;
 
 // Functon takes an incoming error object and sends the error back in the incoming
 // response.
@@ -141,31 +142,27 @@ exports.httpsGet = (url, options) =>
 //
 exports.parseCookies = (req) => {
 
-  // Start by creating the empty output list.
-  //
   var list = {};
 
-  // Now if the cookie property in the incoming request header is defined, then use the
-  // split function to break multiple cookies (separated by ';') into an array of cookie
-  // strings. Then call "forEach" so we can process each cookie string separately.
-  //
   req.headers.cookie && req.headers.cookie.split(';').forEach((cookie) => {
-
-    // Break the cookie into pars using '=' as the delimiter. Note that the value of a
-    // cookie may contain additional '=' characters to we'll have to put the value back
-    // together.
-    //
     var parts = cookie.split('=');
-
-    // Assuming the first item in the array of parts is the cookie name, remove it from
-    // the array (by calling "shift") and use that name to index the outgoing list. For
-    // the value, take the rest of the parts and put them back together replacing the '='
-    // character we moved when we called "split" in the last statement.
-    //
     list[parts.shift().trim()] = decodeURI(parts.join('='));
   });
 
-  // Return the resulting list.
-  //
   return list;
 };
+
+// Function parses all cookie values from the incoming request and looks to see if the
+// list contains one of our movie quotes cookies. If so, the cookie value is returned.
+// Otherwise an exception is thrown.
+//
+exports.validateCookie = (req) => {
+
+  const cookies = exports.parseCookies(req);
+  const movieToken = cookies['movie-quote-token'];
+  if (!movieToken)
+  {
+    throw new HttpError(401, 'Unauthorized');
+  }
+  return movieToken;
+}

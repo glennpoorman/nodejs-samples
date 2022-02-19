@@ -2,7 +2,7 @@
 
 These samples provide an overview of writing server code using JavaScript in the Node environment. The samples start at with the absolute basics starting with the proverbial "Hello World!" app and then slowly adding to the point where you have a functioning (albeit simple) web app.
 
-These samples ultimately end up providing both server and client side work although the focus is mostly on server side JavaScript in the Node environment. There is a sister set of samples where we dive into using React for client side work (cleverly titled "react-samples").
+These samples ultimately end up providing both server and client side work although the focus is mostly on server side JavaScript in the Node environment.
 
 ## Getting Started
 

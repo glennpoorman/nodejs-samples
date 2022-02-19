@@ -9,13 +9,13 @@ page/resource was not found.
 A note about errors
 -------------------
 
-This is the first sample that returns an error. Error codes are split into groups where:
+This is the first sample that returns an error. Standard rror codes are split into groups where:
 
 * 1xx information response - the request was received, continuing processing.
 * 2xx successful – the request was successfully received, understood, and accepted
 * 3xx redirection – further action needs to be taken in order to complete the request
 * 4xx client error – the request contains bad syntax or cannot be fulfilled
-* 5xx server error – the server failed to fulfil an apparently valid request
+* 5xx server error – the server failed to fulfill an apparently valid request
 
 Here we return a 404 which is the standard code for when a requested resource is not found. You
 can get a break down of the different codes in the following Wikipedia article.

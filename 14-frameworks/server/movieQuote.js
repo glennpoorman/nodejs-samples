@@ -1,6 +1,3 @@
-// Note that his module no longer requires any of our own utilities as we are using "Express"
-// to handle the HTTP work. We still, however, need the "movie-quotes" module.
-//
 const movieQuotes = require('popular-movie-quotes');
 
 // Function is called to send back a random movie quote in the given response.

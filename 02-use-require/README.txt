@@ -30,6 +30,8 @@ IMPORTANT: CommonJS vs ES
 -------------------------
 NodeJS defaults to using what are called CommonJS modules. In recent years, the trend has moved
 toward using ES modules. Both are simply files containing JavaScript code but the syntax for export
-and import of these modules are different. At the time of writing, ES modules were considered
-experimental in NodeJS. Since then they have become fully supported and I will likely repurpose
-all of these samples to use ES modules. For now, however, the modules are CommonJS.
+and import of these modules are different. When these samples were created, ES modules were still
+considered experimental in Node. Now (February 2022) they are fully supported but there are still
+complications when it comes to deciding whether or not to implement code using CommonJS or ES. For
+now I am leaving these samples as CommonJS modules but that could change in the not too distant
+future.

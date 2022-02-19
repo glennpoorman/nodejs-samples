@@ -197,7 +197,7 @@ function logout() {
 window.onload = function() {
 
   // If the user is not logged in, redirect the browser to "login.html" where the user will
-  // have the option of logging in in order to continue using the app.
+  // have the option of logging in to continue using the app.
   //
   if (!loggedIn()) {
     window.location.replace('./login.html');

@@ -4,8 +4,8 @@
 const fs = require('fs');
 const path = require('path');
 
-// Define an object where the properties are the various file extensions we'll work with in this
-// sample and the corresponding values are the MIME types.
+// Define an object where the properties are the various file extensions we'll work with in these
+// samples and the corresponding values are the MIME types.
 //
 // A MIME type is a standard string to describe the content type in a request. These types were
 // originally created to allow documents other than plain text to be attached to an email message

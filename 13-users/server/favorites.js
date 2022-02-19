@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { sendJSON, getBody, readJson, writeJson, parseCookies, HttpError, sendError } = require('./utilities');
+const { sendJSON, getBody, readJson, writeJson, HttpError, sendError, validateCookie } = require('./utilities');
 
 // Utility goes through the quotes in the given quotes array and determines the next available id
 // that can be used.
@@ -16,62 +16,62 @@ function nextId(quotes)
 //
 function favoritesFile(req)
 {
-  const cookies = parseCookies(req);
-  const movieToken = cookies['movie-quote-token'];
+  // Note that "validateCookie" will throw an exception if the cookie does not exist
+  // but we can rely on the caller to catch it.
+  const movieToken = validateCookie(req);
 
-  if (movieToken)
-  {
-    const userId = movieToken.split('.').pop();
-    return path.join(__dirname, `${userId}.json`);
-  }
+  const userId = movieToken.split('.').pop();
+  return path.join(__dirname, `${userId}.json`);
 }
 
 // Send the list of favorite quotes back in the body of the given response.
 //
-// Note that instead of a hard coded favorites file name, we call our utility to parse
-// the user id from the incoming request and create the file name based on that id. If
-// we fail to parse the id from the request or if the file doesn't exist, we just let
-// the call to "readJson" throw an exception and we simply return an empty list.
-//
 exports.sendFavorites = async (req, res) => {
 
   try {
-    const quotes = await readJson(favoritesFile(req));
-    sendJSON(res, 200, quotes);
+
+    validateCookie(req);
+
+    // Note that instead of a hard coded favorites file name, we call our utility
+    // to parse the user id from the incoming request and create the file name based
+    // on that id.
+    //
+    const theFile = favoritesFile(req);
+  
+    if (fs.existsSync(theFile)) {
+      const quotes = await readJson(theFile);
+      sendJSON(res, 200, quotes);
+    } else {
+      sendJSON(res, 200, []);
+    }
   } catch(e) {
-    sendJSON(res, 200, []);
+    sendError(res, e);
   }
 };
 
 // Parse a quote object from the request body and add the new quote to the favorites file.
 //
-// Again note that instead of the hard coded favorites file name, we call the utility to
-// parse the user id from the incoming request and create the file name based on that id.
-//
 exports.addFavorite = async (req, res) => {
 
   try {
+
+    validateCookie(req);
+
     const body = await getBody(req);
     const quoteObj = JSON.parse(body);
     if (!quoteObj.quote || !quoteObj.film) {
       throw new HttpError(400, 'Invalid quote');
     }
 
-    // Initialize the quotes list to be an empty array and then call the utility to fetch
-    // the user's filename based on the user id in the incoming request. If that file exists
-    // on disk, read the contents into the local quotes array. Otherwise, the local array
-    // stays empty.
-    //
     let quotes = [];
+
+    // Again note that instead of the hard coded favorites file name, we call the utility to
+    // parse the user id from the incoming request and create the file name based on that id.
+    //
     const theFile = favoritesFile(req);
     if (fs.existsSync(theFile))
       quotes = await readJson(theFile);
 
-    // Now go through the same steps we did before to parse the incoming quote from the
-    // request, add it to the local array, and then output the array back to the file on
-    // disk. Note that, again, we are using the file created from the incoming user id
-    // if that file didn't already exist, we'll be creating it here.
-    //
     if (quotes.find((q) => (q.quote == quoteObj.quote && q.film == quoteObj.film))) {
       throw new HttpError(403, 'Duplicate quote');
     } else {
@@ -88,16 +88,14 @@ exports.addFavorite = async (req, res) => {
 // Called to process a DELETE request in order to delete a quote from the favorites list.
 // favorites list.
 //
-// Again note that instead of the hard coded favorites file name, we call the utility to
-// parse the user id from the incoming request and create the file name based on that id.
-//
 exports.deleteFavorite = async (req, res) => {
 
   try {
 
-    // In the previous sample, the favorites file was hard coded. Now we're using a
-    // file based on the user id so start by using the incoming user id to create the
-    // user filename.
+    validateCookie(req);
+
+    // Again note that instead of the hard coded favorites file name, we call the utility to
+    // parse the user id from the incoming request and create the file name based on that id.
     //
     const theFile = favoritesFile(req);
 

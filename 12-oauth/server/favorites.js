@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { sendJSON, getBody, readJson, writeJson, HttpError, sendError } = require('./utilities');
+const { sendJSON, getBody, readJson, writeJson, HttpError, sendError, validateCookie } = require('./utilities');
 
 // Local text file will hold the list of favorite quotes.
 //
@@ -19,10 +19,24 @@ function nextId(quotes)
 exports.sendFavorites = async (req, res) => {
 
   try {
-    const quotes = await readJson(favoritesFile);
-    sendJSON(res, 200, quotes);
+
+    // Verify that the incoming request contains a movie quotes cookie. If
+    // not, an exception is thrown and we return an error in the catch block.
+    //
+    validateCookie(req);
+
+    // This version checks to see if the favorites file exists as we want
+    // to treat the absence of the file as an empty list as opposed to an
+    // error.
+    //
+    if (fs.existsSync(favoritesFile)) {
+      const quotes = await readJson(favoritesFile);
+      sendJSON(res, 200, quotes);
+    } else {
+      sendJSON(res, 200, []);
+    }
   } catch(e) {
-    sendJSON(res, 200, []);
+    sendError(res, e);
   }
 };
 
@@ -31,6 +45,12 @@ exports.sendFavorites = async (req, res) => {
 exports.addFavorite = async (req, res) => {
 
   try {
+
+    // Verify that the incoming request contains a movie quotes cookie. If
+    // not, an exception is thrown and we return an error in the catch block.
+    //
+    validateCookie(req);
+
     const body = await getBody(req);
     const quoteObj = JSON.parse(body);
     if (!quoteObj.quote || !quoteObj.film) {
@@ -60,6 +80,12 @@ exports.addFavorite = async (req, res) => {
 exports.deleteFavorite = async (req, res) => {
 
   try {
+
+    // Verify that the incoming request contains a movie quotes cookie. If
+    // not, an exception is thrown and we return an error in the catch block.
+    //
+    validateCookie(req);
+
     const url = new URL(req.url, `http://${req.headers.host}/`);
     const id = parseInt(url.searchParams.get('id'));
     if (isNaN(id)) {

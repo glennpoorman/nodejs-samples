@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express = require('express');
-const { logRequest } = require('./utilities');
+const { logRequest, validateCookie } = require('./utilities');
 const { sendQuote } = require('./movieQuote');
 const { sendFavorites, addFavorite, deleteFavorite } = require('./favorites');
 const { authorize, sendToken } = require('./oauth');
@@ -16,6 +16,7 @@ app.use(logRequest);
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static('public'));
+app.use(validateCookie);
 
 // Setup our routes for this sample.
 //

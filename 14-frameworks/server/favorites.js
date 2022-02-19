@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { readJson, writeJson, HttpError, sendError } = require('./utilities');
+const { readJson, writeJson, HttpError, sendError, validateCookie } = require('./utilities');
 
 // Utility goes through the quotes in the given quotes array and determines the next available id
 // that can be used.
@@ -10,22 +10,21 @@ function nextId(quotes)
   return quotes.reduce((high, curr) => (curr.id > high) ? curr.id : high, 0) + 1;
 };
 
-// Utility fetches our movie token cookie from the incoming request. If we find it, we strip the
-// user id from the end of the cookie and use that id to create the user's favorites data filename.
+// Utility fetches our movie token cookie from the incoming request and uses it to create
+// the user's favoriates data filename.
 //
 function favoritesFile(req)
 {
-  // Note that we no longer use our old "parseCookies" utility and now simply reference the
-  // object "req.cookies" to fetch our cookie value. Since we installed "cookie-parser" as
-  // middleware to be run before getting here (see comments in "server.js" file), the cookies
-  // have already been parsed and we can simply reference them here.
+  // Note that we can make two assumptions in the line below.
+  //
+  //   1. The "cookie-parser" middleware has already parsed our cookies into the "req.cookies" array.
+  //
+  //   2. Our "validateCookie" middleware has already run and if the cookie didn't exist, we would
+  //      have thrown an exception and would never get here.
   //
   const movieToken = req.cookies['movie-quote-token'];
-  if (movieToken)
-  {
-    const userId = movieToken.split('.').pop();
-    return path.join(__dirname, `${userId}.json`);
-  }
+  const userId = movieToken.split('.').pop();
+  return path.join(__dirname, `${userId}.json`);
 }
 
 // Send the list of favorite quotes back in the body of the given response.
@@ -33,10 +32,16 @@ function favoritesFile(req)
 exports.sendFavorites = async (req, res) => {
 
   try {
-    const quotes = await readJson(favoritesFile(req));
-    res.status(200).json(quotes);
+
+    const theFile = favoritesFile(req);
+    if (fs.existsSync(theFile)) {
+      const quotes = await readJson(theFile);
+      res.status(200).json(quotes);
+    } else {
+      res.status(200).json([]);
+    }
   } catch(e) {
-    res.status(200).json([]);
+    sendError(res, e);
   }
 };
 

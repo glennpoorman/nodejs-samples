@@ -1,10 +1,10 @@
 NodeJS Samples
 
-After an accelerated "boot camp" attended by several members of the Factory team last year, it
-occurred to me that one issue I've had with attempting to learn programming in the web world was
-the overwhelming amount of info you need to soak up just to get started. It seems like most
-tutorials can't even get off the ground without having you install a dozen or so frameworks and
-never taking the time to go into what they all do.
+After an accelerated "boot camp" I attended a few years back at work, it occurred to me that one
+issue I've had with attempting to learn programming in the web world was the overwhelming amount
+of info you need to soak up just to get started. It seems like most tutorials can't even get off
+the ground without having you install a dozen or so frameworks and never taking the time to go
+into what they all do.
 
 The instructor in our short boot camp did a good job of focusing in purely on server side JavaScript
 and we learned a lot but there was still a lot of "setup" that I didn't really understand and would
@@ -17,8 +17,7 @@ point where you have a functioning (albeit very simple) web app and you understa
 being used to make it work.
 
 These samples ultimately end up providing both server and client side work although the focus is
-mostly on client side JavaScript in the Node environment. There is a sister set of samples where we
-dive into using React for client side work (cleverly titled "react-samples").
+mostly on server side JavaScript in the Node environment.
 
 NodeJS
 ------
@@ -68,13 +67,13 @@ on the change, you go to the file/code comments. This high level list simply sav
 for changes in files that haven't changed.
 
 Again, the specifics of the changes and how the code works will be explained in the code comments.
-New things will be heavily commented in the. In an effort to avoid a mile high pile of comments in
-the later samples, detailed comments on code that was already explained in a previous sample will
+New things will be heavily commented in the code. In an effort to avoid a mile high pile of comments
+in the later samples, detailed comments on code that was already explained in a previous sample will
 be removed or simplified down to just a line or two. In other words, if you see some code you don't
 understand and it isn't commented or the comments are vague, chances are it was introduced in an
 earlier sample and was heavily commented there.
 
-To start with though, always sue the "What's Diferent?" section in the README to zoom in on the
+To start with though, always use the "What's Different?" section in the README to zoom in on the
 specific changes for any particular sample.
 
 Files in this folder

@@ -28,7 +28,7 @@ const server = http.createServer((req, res) => {
       sendFile(req, res);
     }
 
-  // If a POST request is send to "/favorite-quotes", we will assume the body of the request
+  // If a POST request is sent to "/favorite-quotes", we will assume the body of the request
   // contains a quote object and we'll add it to the favorites list.
   //
   } else if (req.method === 'POST' && req.url === '/favorite-quotes') {

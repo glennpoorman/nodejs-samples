@@ -79,7 +79,8 @@ What's Different?
   request for a file.
 
   For GET requests, we call the new utility "sendFile" to send the file contents back to the caller
-  using the file suffix to determine the content type.
+  using the file suffix to determine the content type. If the file doesn't exist, we send back a 
+  standard 404 message.
 
   For any other type of request, we send back a standard 404 message.
 

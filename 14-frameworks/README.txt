@@ -98,8 +98,12 @@ What's Different?
 * "server/utilities.js". Most of the utilities in this file were design to ease the task of sending
   various types of responses back to the client. Since Express provides so many methods on both
   requests and responses that perform those same tasks, we can remove ours. The only utilities left
-  then are our promise-based methods to read/write Json files to/from disk and our utility to turn
-  a JSON object into a url query string.
+  then are our promise-based methods to read/write Json files to/from disk, our utility to turn a
+  JSON object into a url query string, and the utility to validate the incoming cookie.
+
+  Note that the cookie validation function no longer calls our old "parseCookies" function to get
+  the cookies from the request header. Now we can assume that the "cookie-parser" middleware has
+  already done this and we can access the cookies via the "cookies" property on the request.
 
 * "server/movieQuote.js". This file is mostly the same but has some subtle simplifications. Express
   introduces several utilities for working with requests and responses that clean things up and
@@ -113,11 +117,7 @@ What's Different?
   First, all of the responses use Express methods as opposed to our old utilities to set the
   response data and to send.
 
-  Second, the utility function "favoritesFile" no longer calls our old "parseCookies" function
-  to get the cookies from the request header. Now we can assume that the "cookie-parser" middleware
-  has already done this and we can access the cookies via the "cookies" property on the request.
-
-  Third, the "addFavorite" function is written to assume that the "body-parser" middleware has
+  Second, the "addFavorite" function is written to assume that the "body-parser" middleware has
   already received the entirety of the request body. That means we're able to remove the call to
   our old "getBody" utility and simply reference the "body" property on the incoming request.
 

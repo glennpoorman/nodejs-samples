@@ -11,7 +11,7 @@ exports.writeJson = util.promisify(jsonfile.writeFile);
 
 // HttpError class extends the standard Error class.
 //
-exports.HttpError = class HttpError extends Error
+class HttpError extends Error
 {
   constructor(code, msg)
   {
@@ -19,6 +19,7 @@ exports.HttpError = class HttpError extends Error
     this.code = code;
   }
 }
+exports.HttpError = HttpError;
 
 // Functon takes an incoming error object and sends the error back in the incoming
 // response.
@@ -55,3 +56,36 @@ exports.logRequest = (req, res, next) => {
   console.log(`${req.method} request posted for \"${req.url}\"`);
   next();
 };
+
+// The validate cookie function has been re-written to be an Express middleware function.
+// We'll install the function in such a way that it is run AFTER the "cookie-parser" module
+// but before execution of the route handling code. This way we can validate the cookie
+// before we ever get into our code.
+//
+// Note the function signature change just like the "logRequest" function above.
+//
+exports.validateCookie = (req, res, next) => {
+
+  const noAuthPaths = ['/oauth', '/oauth/code'];
+  if (!noAuthPaths.includes(req.path)) {
+
+    // Note that we no longer use our old "parseCookies" utility and now simply reference the
+    // object "req.cookies" to fetch our cookie value. Since we installed "cookie-parser" as
+    // middleware to be run before getting here (see comments in "server.js" file), the cookies
+    // have already been parsed and we can simply reference them here.
+    //
+    const movieToken = req.cookies['movie-quote-token'];
+
+    // If the cookie isn't there, we can throw an exception and the Express error handling
+    // mechanism will return that as an error back to the client.
+    //
+    if (!movieToken) {
+      throw new HttpError(401, 'Unauthorized');
+    }
+  }
+
+  // If we're still here, the cookie is valid and we can call "next" in order to proceed
+  // to the next step of the execution.
+  //
+  next();
+}

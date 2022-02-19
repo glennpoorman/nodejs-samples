@@ -1,8 +1,8 @@
 // Load the third party "popular-movie-quotes" module as we'll need it to generate the actual quote.
-// We'll also need our own "sendJSON" and "send404" utilities to send responses back to the client.
+// We'll also need our own "sendJSON" utility to send the response back to the client.
 //
 const movieQuotes = require('popular-movie-quotes');
-const { sendJSON, send404 } = require('./utilities');
+const { sendJSON } = require('./utilities');
 
 // Function is called to send back a random movie quote in the given response.
 //

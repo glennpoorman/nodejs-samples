@@ -20,13 +20,13 @@ First simply try running the main program and note the errors that occur.
 
   Error: Cannot find module 'popular-movie-quotes'
   Require stack:
-  - D:\Glenn\nodejs-samples\03-use-npm\hello-goodbye.js
-  - D:\Glenn\nodejs-samples\03-use-npm\use-npm.js
+  - C:\NodeJS\03-use-npm\hello-goodbye.js
+  - C:\NodeJS\03-use-npm\use-npm.js
       at Function.Module._resolveFilename (internal/modules/cjs/loader.js:965:15)
       at Function.Module._load (internal/modules/cjs/loader.js:841:27)
       at Module.require (internal/modules/cjs/loader.js:1025:19)
       at require (internal/modules/cjs/helpers.js:72:18)
-      at Object.<anonymous> (D:\Glenn\nodejs-samples\03-use-npm\hello-goodbye.js:5:21)
+      at Object.<anonymous> (C:\NodeJS\03-use-npm\hello-goodbye.js:5:21)
       at Module._compile (internal/modules/cjs/loader.js:1137:30)
       at Object.Module._extensions..js (internal/modules/cjs/loader.js:1157:10)
       at Module.load (internal/modules/cjs/loader.js:985:32)
@@ -34,8 +34,8 @@ First simply try running the main program and note the errors that occur.
       at Module.require (internal/modules/cjs/loader.js:1025:19) {
     code: 'MODULE_NOT_FOUND',
     requireStack: [
-      'D:\\Glenn\\nodejs-samples\\03-use-npm\\hello-goodbye.js',
-      'D:\\Glenn\\nodejs-samples\\03-use-npm\\use-npm.js'
+      'C:\\NodeJS\\03-use-npm\\hello-goodbye.js',
+      'C:\\NodeJS\\03-use-npm\\use-npm.js'
     ]
   }
 
@@ -57,11 +57,11 @@ the command "npm install" as follows:
 Note that running the install creates a folder called "node_modules" where all installed modules will
 go along with any dependencies they might have. In this case, only the "popular-movie-quotes" module
 is installed but it's not uncommon to see other modules installed that you did not reference directly.
-This occurs when when the modules you do reference have their own dependencies on other modules. In
-words, "npm install" makes sure that you have everything you need to run successfully. The idea here
-is that you never have to save these third party modules or commit them to your source repository. As
-long as your project knows what it needs, you can rely on "npm install" to get it for you when you
-need it (more on this in a minute).
+This occurs when the modules you do reference have their own dependencies on other modules. In words,
+"npm install" makes sure that you have everything you need to run successfully. The idea here is that
+you never have to save these third party modules or commit them to your source repository. As long as
+your project knows what it needs, you can rely on "npm install" to get it for you when you need it (more
+on this in a minute).
 
 So with that done, try running the main program again and you should see:
 
@@ -85,9 +85,9 @@ What's Different?
 
   Running that command will ask a series of questions and then generate the initial file. Once the
   file is created, you can add dependencies by running the "npm" command for each dependency and
-  instructing the command to not only to install the dependency but to save the dependency
-  information in your "package.json" file. For example, to add the "popular-movie-quotes" dependency
-  to this sample, I ran the following on the command line:
+  instructing the command to not only to install the dependency but to save the dependency information
+  in your "package.json" file. For example, to add the "popular-movie-quotes" dependency to this
+  sample, I ran the following on the command line:
 
     C:\NodeJS\03-use-npm>npm install popular-movie-quotes --save
 

@@ -17,7 +17,7 @@ const server = http.createServer((req, res) => {
   // Now we need to send back a response which is something that is expected from every HTTP request.
   // The bare minimum response should include a status code, a content type header, and the response
   // body. Here we do this in three separate steps and then wrap up with a call to "end" telling the
-  // server that the response is complete.
+  // server that the response is complete and can be sent.
   //
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');

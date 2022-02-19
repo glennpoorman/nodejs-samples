@@ -46,7 +46,7 @@ A note about "favicon.ico"
 --------------------------
 
 When you point most (if not all) modern web browsers to a web page, the browser automatically
-generates two GET request. The first is for the page you said you wanted to view. The second is for
+generates two GET requests. The first is for the page you said you wanted to view. The second is for
 "favicon.ico". What is happening in the second request is that the browser is looking for a small
 icon file that any web page may optionally provide. If that file is found, the browser will display
 the contents as a tiny icon next to the web page title. If the file isn't found, there's no harm

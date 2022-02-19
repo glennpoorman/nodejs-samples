@@ -43,7 +43,7 @@ const server = http.createServer((req, res) => {
   // Note that while you might think its ok to process the requests we want and simply ignore the
   // rest, it's always a good idea to return a response all the time. Requests tend to go out to
   // lunch when no response is sent. You might not notice via your web browser when, for example,
-  // the request for "favicon.ico" goes unanswered. It you try and send a bad request through a tool
+  // the request for "favicon.ico" goes unanswered. If you try and send a bad request through a tool
   // like "Postman" for example, the bad request will hang and you'll need to cancel the request
   // manually.
   //

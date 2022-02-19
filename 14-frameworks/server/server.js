@@ -8,7 +8,7 @@
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express = require('express');
-const { logRequest } = require('./utilities');
+const { logRequest, validateCookie } = require('./utilities');
 const { sendQuote } = require('./movieQuote');
 const { sendFavorites, addFavorite, deleteFavorite } = require('./favorites');
 const { authorize, sendToken } = require('./oauth');
@@ -56,6 +56,36 @@ app.use(logRequest);
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static('public'));
+
+// Here we use our re-written "validateCookie" utility as middleware. Placement here is very
+// important.
+//
+// 1. This line MUST come after the line that installs the "cookie-parser" middleware. That
+//    way we can write the validation code assuming that the cookies have already been parsed
+//    and are accesible directly via the "req.cookies" property.
+//
+// 2. This line MUST also come after the "express.static" installation. The function itself
+//    was written so that some routes are exempt from authorization (see the commens in the
+//    function). But we also want to make sure we're not doing validation for each and every
+//    request that comes in for a static file. By installing our validation middleware AFTER
+//    the "express.static" middleware, we ensure that any processing of static files is done
+//    prior and we don't have to worry about it.
+//
+// NOTE: There is an alternative approach to controlling exactly which routes middleware is
+//       applied to. We could skip the "app.use" call entirely and install the middleware
+//       directly in the route setup below. Consider the "/movie-quote" route. We could have
+//       just as easily written it as:
+//
+//         app.get('/movie-quote', validateCookie, sendRoute);
+//
+//       This specifies what functions are called to handle the route and in what order.
+//       It's not a bad solution and it does work. But this is a simple sample. That approach
+//       presumes that anyone and everyone who ever addes additional routes to a program will
+//       also remember to add the call to validate. Plus, depending on what other kinds of
+//       pre-processing you want to do on various routes, this approach can get very busy
+//       very fast.
+//
+app.use(validateCookie);
 
 // Here we setup our routes. The express app has functions for all of the different request
 // methods. Here we call the appropriately named method for the routes we previously handled

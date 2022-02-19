@@ -33,7 +33,7 @@ OAuth2 provides both "two-legged" and "three-legged" authorization.
    to a specific user and that user must explicitly provide authorization. This is typically
    done by redirecting the user to a login page on the authorization server which then prompts
    for credentials. Once the user is successfully logged in, they are redirected back to the
-   applicaton which has now been granted access to resouces owned by that user. This kind of
+   applicaton which has now been granted access to resources owned by that user. This kind of
    flow is called "three-legged" because the server application, the authorization server, and
    the end user make up the three "legs".
 
@@ -62,10 +62,10 @@ What this app does
 
 Any application that wants to use an external authorization server must register with that
 server. This is a one time registration that the app developer does and is generally done
-through a web portal. For this sample, I've already registered the app which means you can
-build it and run it. If you want so see how registration works, you can register your own
-and replace the data in "server/config.js". There is no standard for registration and they
-all handle it a little differently. Here we'll focus on GitHub since that's the server we're
+through a web portal. For this sample, I've already registered the app with GitHub which
+means you can build it and run it. If you want so see how registration works, you can register
+your own and replace the data in "server/config.js". The web portals for app registration
+vary a bit from server to server. Here we'll focus on GitHub since that's the server we're
 using for this sample. To register then, use the following steps:
 
   1. Login to GitHub.
@@ -118,6 +118,16 @@ into the app.
   7. The "Logout" button on the main quotes page essentially logs the user out by locating
      the cookie in the web page and marking it as expired.
 
+By itself, the authentication doesn't really secure the application. Once the server is
+running, you can use a browser or a utility like Postman and send a request to our app to
+fetch a movie quote (http://localhost:3000/movie-quote) and it will work. Since we're sending
+the access token back as a cookie, we can secure our app just a little by taking advantage
+of the fact that requests sent from a web browser include all of the cookies from the
+initiating web page. We'll add code to all of our incoming requests to check for our movie
+quotes cookie and throw an exception if the cookie isn't included in the request. This way
+we (somewhat) make sure that any requests are sent from a web browser that is logged in.
+Obviously this is pretty flimsy security but for the purposes of this sample, it will do.
+
 Try It
 ------
 
@@ -150,6 +160,12 @@ What's Different?
   The new "makeQuery" utility takes a Javascript object and returns a URL query string based
   on the key/value pairs in the original object.
 
+  Added utility "parseCookies" which takes an http request and parses the cookies embedded in
+  the request (if there are any) into a list of cookie values indexed by the cookie names.
+
+  Added utility "validateCookie" that parses the movie quotes token from an incoming request
+  and returns the cookie value. An exception is thrown if the cookie does not exist.
+
 * "server/config.js". This file contains an informational object "config" which contains all
   of the data necessary for authorization. The data includes the URLs to send our authorization
   requests to as well as information obtained when we registered our app (the client id and
@@ -170,6 +186,12 @@ What's Different?
   web page.
 
 * "server/server.js". Code was added to handle GET requests for "/oauth" and "/oauth/code".
+
+* "server/movieQuote.js". Send quote has been modified to validate that the incoming request
+  contains a movie quotes cookie and returns an error if it does not.
+
+* "server/favorites.js". All of the favorites requests have been modified to validate that
+  the incoming request contains a movie quotes cookie and returns an error if it does not.
 
 * "public/login.html". A new HTML file. the main "index.html" will redirect here if the user
   is not currently logged in. This page will present a "login" button allowing the user to

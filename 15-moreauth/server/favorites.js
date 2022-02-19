@@ -10,17 +10,14 @@ function nextId(quotes)
   return quotes.reduce((high, curr) => (curr.id > high) ? curr.id : high, 0) + 1;
 };
 
-// Utility fetches our movie token cookie from the incoming request. If we find it, we strip the
-// user id from the end of the cookie and use that id to create the user's favorites data filename.
+// Utility fetches our movie token cookie from the incoming request and uses it to create
+// the user's favoriates data filename.
 //
 function favoritesFile(req)
 {
   const movieToken = req.cookies['movie-quote-token'];
-  if (movieToken)
-  {
-    const userId = movieToken.split('.').pop();
-    return path.join(__dirname, `${userId}.json`);
-  }
+  const userId = movieToken.split('.').pop();
+  return path.join(__dirname, `${userId}.json`);
 }
 
 // Send the list of favorite quotes back in the body of the given response.
@@ -28,10 +25,16 @@ function favoritesFile(req)
 exports.sendFavorites = async (req, res) => {
 
   try {
-    const quotes = await readJson(favoritesFile(req));
-    res.status(200).json(quotes);
+
+    const theFile = favoritesFile(req);
+    if (fs.existsSync(theFile)) {
+      const quotes = await readJson(theFile);
+      res.status(200).json(quotes);
+    } else {
+      res.status(200).json([]);
+    }
   } catch(e) {
-    res.status(200).json([]);
+    sendError(res, e);
   }
 };
 
@@ -45,14 +48,14 @@ exports.addFavorite = async (req, res) => {
     if (!quoteObj.quote || !quoteObj.film) {
       throw new HttpError(400, 'Invalid quote');
     }
-
+  
     let quotes = [];
     const theFile = favoritesFile(req);
     if (fs.existsSync(theFile))
       quotes = await readJson(theFile);
-
+  
     if (quotes.find((q) => (q.quote == quoteObj.quote && q.film == quoteObj.film))) {
-      throw new HttpError(403, 'Duplicate quote');
+      throw new HttpError(304, 'Duplicate quote');
     } else {
       quoteObj.id = nextId(quotes);
       quotes.push(quoteObj);
@@ -81,7 +84,7 @@ exports.deleteFavorite = async (req, res) => {
     let quotes = await readJson(theFile);
     const ix = quotes.findIndex(quoteObj => (quoteObj.id === id));
     if (ix < 0) {
-      throw new HttpError('Id out of range');
+      throw new HttpError(400, 'Id out of range');
     }
 
     quotes.splice(ix, 1);
