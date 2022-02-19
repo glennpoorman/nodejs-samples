@@ -11,7 +11,7 @@ exports.writeJson = util.promisify(jsonfile.writeFile);
 
 // HttpError class extends the standard Error class.
 //
-class HttpError extends Error
+exports.HttpError = class HttpError extends Error
 {
   constructor(code, msg)
   {
@@ -19,13 +19,12 @@ class HttpError extends Error
     this.code = code;
   }
 }
-exports.HttpError = HttpError;
 
 // Functon takes an incoming error object and sends the error back in the incoming
 // response.
 // 
 exports.sendError = (res, err) => {
-  if (err instanceof HttpError) {
+  if (err instanceof exports.HttpError) {
     res.status(err.code).json({ error : err.message });
   } else {
     res.status(500).json({ error : err.message });
@@ -57,7 +56,7 @@ exports.validateCookie = (req, res, next) => {
   if (!noAuthPaths.includes(req.path)) {
     const movieToken = req.cookies['movie-quote-token'];
     if (!movieToken) {
-      throw new HttpError(401, 'Unauthorized');
+      throw new exports.HttpError(401, 'Unauthorized');
     }
   }
 

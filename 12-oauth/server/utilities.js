@@ -75,7 +75,7 @@ exports.sendFile = async (req, res) => {
 // HttpError class extends the standard Error class. In addition to the descriptive
 // message, this class also takes an HTTP error code in the constructor.
 //
-class HttpError extends Error
+exports.HttpError = class HttpError extends Error
 {
   constructor(code, msg)
   {
@@ -83,13 +83,12 @@ class HttpError extends Error
     this.code = code;
   }
 }
-exports.HttpError = HttpError;
 
 // Functon takes an incoming error object and sends the error back in the incoming
 // response.
 // 
 exports.sendError = (res, err) => {
-  if (err instanceof HttpError) {
+  if (err instanceof exports.HttpError) {
     exports.sendJSON(res, err.code, { error : err.message });
   } else {
     exports.sendJSON(res, 500, { error : err.message });
@@ -228,7 +227,7 @@ exports.validateCookie = (req) => {
   const movieToken = cookies['movie-quote-token'];
   if (!movieToken)
   {
-    throw new HttpError(401, 'Unauthorized');
+    throw new exports.HttpError(401, 'Unauthorized');
   }
   return movieToken;
 }
