@@ -157,6 +157,17 @@ exports.getBody = (req) =>
 // performing operations like interacting with the favorites file where we have two
 // or three asynchronous calls in one place.
 
+// IMPORTANT NOTE!
+// After the time of the initial coding of these samples, all three of the helpers
+// below have been rendered obsolete. The "fs" module provides a property named
+// "promises" which is an object that provides promise-ready versions of all of the
+// methods contained in the "fs" object. Similarly, if you peruse the npm website
+// (npmjs.com), you'll find a package called "jsonfile-promised" that provides
+// promise-ready wrappers for all of the methods in "jsonfile". I'd considered
+// re-writing these samples to use those wrappers but decided to leave them as-is
+// in order to demonstrate how any function using the standard JS callback format
+// can be "promisified".
+
 // Promise version of "fs.readFile".
 //
 exports.readFile = util.promisify(fs.readFile);
