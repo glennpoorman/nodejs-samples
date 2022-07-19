@@ -9,7 +9,7 @@
   "author": "Glenn Poorman",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.19"
   },
   "dependencies": {
     "popular-movie-quotes": "^1.2.4"

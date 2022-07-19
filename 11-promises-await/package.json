@@ -9,10 +9,10 @@
   "author": "Glenn Poorman",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.19"
   },
   "dependencies": {
-    "jsonfile": "^6.0.1",
+    "jsonfile": "^6.1.0",
     "popular-movie-quotes": "^1.2.4"
   },
   "nodemonConfig": {
