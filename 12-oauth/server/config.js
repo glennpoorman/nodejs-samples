@@ -1,16 +1,11 @@
 // The information below is information required for authorization. The URLs are the GitHub
-// endpoints we need to send authorization requests to. The client id and client secret were
-// obtained from the GitHub portal when the application was registered.
+// endpoints we need to send authorization requests to. The client id and client secret need
+// to be obtained from the GitHub portal when the application is registered.
 //
 // As a matter of practice, client secrets should never be submitted to a code repository
-// unencrypted. Here I've left the information in as this application is harmless with a
-// registered url and redirect url both pointing to "localhost". In a real world app though,
-// a client secret getting out is a major security risk.
-//
-// You can certainly run this app as is using the client id and secret below. You might
-// consider registering the app under your own name though just to see how to do it. You
-// can follow the steps below and then change the client id and client secret using the
-// data from your registration.
+// or, at least, never submitted unencrypted. Here you will need to register the application
+// with GitHub in order to obtain your own client id and secret. You can follow the steps
+// below to register the app and obtain a client id and secret.
 //
 //  1. Login to GitHub.
 //  2. In the menu under your profile picture, select "Settings".
@@ -32,14 +27,17 @@
 //
 //   i.e. config.facebook, config.google, etc.
 //
+// As an added exercise, you might consider the steps you would need to take on both the
+// client and server side in order to handle more than one authorization server.
+//
 exports.config = {
   github : {
 
     authorizeEndpoint : 'https://github.com/login/oauth/authorize',
     getTokenEndpoint : 'https://github.com/login/oauth/access_token',
     credentials : {
-      clientId : 'd5c7d869f0f9154f9d7e',
-      clientSecret : '018ad4eb166c1287e66c02c48b8a6f7131e7a4a0',
+      clientId : '',
+      clientSecret : '',
       redirectUri : 'http://localhost:3000/oauth/code'
     }
   }

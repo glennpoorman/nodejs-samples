@@ -49,7 +49,7 @@ we won't be accessing any of their resources on the authorization server. Since 
 are all posted to GitHub, we'll use GitHub as our authorization server. Since we require a 
 user to login, we'll be using three-legged authorization.
 
-The typical OAuth2 authorization flow looks as follows:
+The typical 3-legged OAuth2 authorization flow looks as follows:
 
   1. Client app redirects to authorization server.
   2. User provides credentials for authentication.
@@ -62,11 +62,9 @@ What this app does
 
 Any application that wants to use an external authorization server must register with that
 server. This is a one time registration that the app developer does and is generally done
-through a web portal. For this sample, I've already registered the app with GitHub which
-means you can build it and run it. If you want so see how registration works, you can register
-your own and replace the data in "server/config.js". The web portals for app registration
-vary a bit from server to server. Here we'll focus on GitHub since that's the server we're
-using for this sample. To register then, use the following steps:
+through a web portal provided by the authorization server. The registration process will
+result in a client id and client secret unique to this application. In order to register
+the application, follow the steps below.
 
   1. Login to GitHub.
   2. In the menu under your profile picture, select "Settings".
@@ -74,7 +72,7 @@ using for this sample. To register then, use the following steps:
   4. Select "OAuth Apps".
   5. Any apps you've already registered will be shown.
   6. In the upper left corner, select "New OAuth App".
-  7. Fill in the application name "movie-quotes".
+  7. Fill in the application name with something descriptive.
   8. Fill in the Homepage URL "http://localhost:3000".
   9. Fill in the Authorization callback URL "http://localhost:3000/oauth/code"
  10. Click the "Register application" button.
@@ -82,6 +80,12 @@ using for this sample. To register then, use the following steps:
  12. Click "Generate a new client secret" (you may need to re-enter password).
  13. Make a note of the generated client secret.
  14. Make sure the app is saved/updated in the web portal.
+ 15. We'll make use of the client id and secret later on in the code.
+
+NOTE: Your client credentials should NEVER be stored with source in your repo. This is the
+      information that keeps your application secure and storing where anyone can see it is
+      a huge security risk. You can look online for best practices for storing/securing your
+      web application client credentials.
 
 When the movie quotes app is run, the following steps occur before the user is allowed
 into the app.
@@ -131,9 +135,11 @@ Obviously this is pretty flimsy security but for the purposes of this sample, it
 Try It
 ------
 
-Optionally register this application with GitHub. I've already done this and included the
-client id and secret in "server/config.js". If you want to see how it's done though, you
-can register your own version and replace the information in that file.
+Register this application with GitHub and record the client id and secret in the file
+"server/config.js". Again this is a one-time step done by the developer. I registered my 
+own version for testing purposes but have left this as a step in order to give the reader
+the experience of registering an application with an authorization server and also to
+avoid storing client credentials in the source repo.
 
 Start the server by running "npm start" from the command line.
 
@@ -169,7 +175,8 @@ What's Different?
 * "server/config.js". This file contains an informational object "config" which contains all
   of the data necessary for authorization. The data includes the URLs to send our authorization
   requests to as well as information obtained when we registered our app (the client id and
-  the client secret).
+  the client secret). Right now those client credentials are left blank but need to be filled
+  in when the application is registered.
 
 * "server/oauth.js". This file is newly added to handle all authorization routes.
 
