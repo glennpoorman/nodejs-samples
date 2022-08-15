@@ -55,7 +55,7 @@ The typical 3-legged OAuth2 authorization flow looks as follows:
   2. User provides credentials for authentication.
   3. On success, authorization server redirects back to client app with an authorization code.
   4. Client application uses code to ask authorization server for access token.
-  5. Access can be used to access resources on behalf of user.
+  5. Access token can be used to access resources on behalf of user.
 
 What this app does
 ------------------
@@ -175,8 +175,14 @@ What's Different?
 * "server/config.js". This file contains an informational object "config" which contains all
   of the data necessary for authorization. The data includes the URLs to send our authorization
   requests to as well as information obtained when we registered our app (the client id and
-  the client secret). Right now those client credentials are left blank but need to be filled
-  in when the application is registered.
+  the client secret).
+  
+  Note that right now, those client credentials are set by referencing the user environment
+  variables MOVIE_QUOTES_ID and MOVIE_QUOTES_SECRET. We'll be reusing those credentials in the
+  rest of the samples so to make life easy, it's best to simply set those environment variables
+  using the id and secret you obtained when you registered the app and then the code will just
+  work. Alternatively you could change the property values in this file and have them directly
+  reference the id and secret strings.
 
 * "server/oauth.js". This file is newly added to handle all authorization routes.
 
