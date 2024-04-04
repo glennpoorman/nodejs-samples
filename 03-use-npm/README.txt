@@ -57,11 +57,11 @@ the command "npm install" as follows:
 Note that running the install creates a folder called "node_modules" where all installed modules will
 go along with any dependencies they might have. In this case, only the "popular-movie-quotes" module
 is installed but it's not uncommon to see other modules installed that you did not reference directly.
-This occurs when the modules you do reference have their own dependencies on other modules. In words,
-"npm install" makes sure that you have everything you need to run successfully. The idea here is that
-you never have to save these third party modules or commit them to your source repository. As long as
-your project knows what it needs, you can rely on "npm install" to get it for you when you need it (more
-on this in a minute).
+This occurs when the modules you do reference have their own dependencies on other modules. In other
+words, "npm install" makes sure that you have everything you need to run successfully. The idea here
+is that you never have to save these third party modules or commit them to your source repository. As
+long as your project knows what it needs, you can rely on "npm install" to get it for you when you need
+it (more on this in a minute).
 
 So with that done, try running the main program again and you should see:
 
